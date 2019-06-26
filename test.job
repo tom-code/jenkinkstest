@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipelineJob('job1') {
-    displayName('bla bla')
+    displayName('job1')
 
     definition {
         cpsScm {
