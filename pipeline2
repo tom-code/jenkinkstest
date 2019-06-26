@@ -1,0 +1,31 @@
+#!/usr/bin/env groovy
+
+def label = "build-jenkins-operator-${UUID.randomUUID().toString()}"
+def home = "/home/jenkins"
+def workspace = "${home}/workspace/build-jenkins-operator"
+def workdir = "${workspace}/src/github.com/jenkinsci/kubernetes-operator/"
+
+podTemplate(label: label,
+        containers: [
+                containerTemplate(name: 'alpine', image: 'alpine:latest', command: 'cat', ttyEnabled: true),
+        ],
+        ) {
+
+    node(label) {
+        dir(workdir) {
+
+            stage('Dep') {
+                container('alpine') {
+                    sh 'echo "two"'
+                }
+            }
+
+            stage('Test') {
+                container('alpine') {
+                    sh 'echo "three"'
+                }
+            }
+
+        }
+    }
+}
