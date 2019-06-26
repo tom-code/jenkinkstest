@@ -1,0 +1,24 @@
+podTemplate(label: label,
+        containers: [
+                containerTemplate(name: 'alpine', image: 'alpine:latest', command: 'cat', ttyEnabled: true),
+        ],
+        ) {
+
+    node(label) {
+        dir(workdir) {
+
+            stage('Dep') {
+                container('alpine') {
+                    sh 'ls /'
+                }
+            }
+
+            stage('Test') {
+                container('alpine') {
+                    sh 'ps axl'
+                }
+            }
+
+        }
+    }
+}
