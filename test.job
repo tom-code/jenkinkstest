@@ -1,0 +1,19 @@
+#!/usr/bin/env groovy
+
+pipelineJob('build-jenkins-operator') {
+    displayName('bla bla')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://https://github.com/tom-code/jenkinkstest.git')
+                    }
+                    branches('*/master')
+                }
+            }
+            scriptPath('pipeline')
+        }
+    }
+}
