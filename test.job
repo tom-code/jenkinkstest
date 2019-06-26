@@ -19,6 +19,10 @@ pipelineJob('job1') {
 }
 queue('job1')
 listView('mojeee') {
+    columns {
+        name()
+        buildButton()
+    }
     jobs {
         name('job1')
     }
