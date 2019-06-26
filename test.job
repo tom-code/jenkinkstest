@@ -18,3 +18,8 @@ pipelineJob('job1') {
     }
 }
 queue('job1')
+buildMonitorView('mojeee') {
+    jobs {
+        name('job1')
+    }
+}
