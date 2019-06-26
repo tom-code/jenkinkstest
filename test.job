@@ -18,7 +18,7 @@ pipelineJob('job1') {
     }
 }
 queue('job1')
-buildMonitorView('mojeee') {
+listView('mojeee') {
     jobs {
         name('job1')
     }
