@@ -1,0 +1,1054 @@
+openapi: 3.0.0
+info:
+  title: UDSF_UnstructuredDataManagement
+  description: UDSF Unstructured Data Management API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/AM_MavenirSystems/Nudsf_UnstructuredDataManagement/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: '{apiRoot}/nudsf-dm/v1'
+  variables:
+    apiRoot:
+      description: apiRoot as defined in FRS
+      default: https://example.com
+paths:
+  /{nfInstanceID}/{userProfileID}:
+  
+    put:
+      tags:
+      - user Profile under given NF Instance
+      summary: Create or Update a new User Profile
+      operationId: Nudsf_UnstructuredDataManagement_Create Nudsf_UnstructuredDataManagement_Update
+      
+      parameters:
+       
+      
+        
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance for which the user profile belongs to
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userProfileID
+        in: path
+        description: Unique ID of the UserProfile for which the user profile is to be created
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/related:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        200:
+          description: Expected response to a valid request (for updation of a record)
+          content:
+            multipart/related:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        201:
+          description: Expected response to a valid request (for new record creation)
+          content:
+            multipart/related:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer    
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    get:
+      tags:
+      - user Profile under given NF Instance
+      summary: Read the user profile under given NF Instance
+      operationId: Nudsf_UnstructuredDataManagement_Query
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userProfileID
+        in: path
+        description: Unique ID of the user profile stored under the nfinstance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            mulipart/related:
+              schema:
+                $ref: '#/components/schemas/SearchResult'
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'        
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer      
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - user Profile under given NF Instance
+      summary: Deregisters a given User Profile Instance
+      operationId: Nudsf_UnstructuredDataManagement_Delete
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance where the user profile exists
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userProfileID
+        in: path
+        description: Unique ID of the user profile
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        
+        204:
+          description: Expected response to a successful delete
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer      
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+                
+  /{nfInstanceID}/{userProfileID}/notifications:
+    post:
+      tags:
+      - user Profile under given NF Instance (Notifications)
+      summary: UDSF sends the notification with required fields (e.g deleted sessions due to timeouts)
+      operationId: Nudsf_UnstructuredDataManagement_Notification
+      
+      parameters:
+      
+        
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userProfileID
+        in: path
+        description: Unique ID of the user profile
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostData'
+        required: false
+      responses:
+        204:
+          description: Expected response to a successful receipt of request 
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  
+  /{nfInstanceID}:
+  
+    put:
+      tags:
+      - user Profile ID (Store)
+      summary: Create or Update  new User Profile under a given NF
+      operationId: Nudsf_UnstructuredDataManagement_Create_Store Nudsf_UnstructuredDataManagement_Update_Store
+      parameters:
+      
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance for which the user profile belongs to
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/related:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            multipart/related:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserProfile'
+        201:
+          description: Expected response to a valid request
+          content:
+            multipart/related:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserProfile'
+                    
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer          
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    get:
+      tags:
+      - user Profile ID (Store)
+      summary: Read the user profile under given NF Instance
+      operationId: Nudsf_UnstructuredDataManagement_Query_Store
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultList'
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer    
+                
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'  
+    delete:
+      tags:
+      - user Profile ID (Store)
+      summary: Deregisters a given User Profile Instance
+      operationId: Nudsf_UnstructuredDataManagement_Delete_Store
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance where the user profile exists
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        204:
+          description: Expected response to a successful delete
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer          
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+                
+  /{nfInstanceID}/notifications:
+    post:
+      tags:
+      - user Profile ID (Store) (Notifications)
+      summary: UDSF sends the notification with required fields (e.g. session deletes in case of timeouts)
+      operationId: Nudsf_UnstructuredDataManagement_Notification_Store
+      parameters:
+      
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PostData'
+        required: false
+      responses:
+        204:
+          description: Expected response to a successful receipt of request 
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /{nfInstanceID}/applicationInstances:
+    post:
+      tags:
+      - Application Instances Operations
+      summary: NF wants to create an Application Instance 
+      operationId: Nudsf_UnstructuredDataManagement_Create_App_Instance
+      parameters:
+      
+        
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/related:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApplicationProfile'
+        required: true
+      responses:
+        200:
+          description: Expected response to a valid request with Unique ID of the created Application Instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedApplicationInstance'
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer          
+        
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /{nfInstanceID}/applicationInstances/search:
+    get:
+      tags:
+      - Application Instances Operations
+      summary: Read the profile with given search conditions
+      operationId: Nudsf_UnstructuredDataManagement_Query_App_instance_search
+      
+        
+      parameters:
+        
+        - name: nfInstanceID
+          in: path
+          description: Unique ID of the NF Instance
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        
+        
+        - name: SearchKeyObject
+          in: query
+          description:  Key for which the query is to be done
+          required: false
+          
+          explode: true
+          # for OR operation, style is pipeDelimited
+          # for AND operation, style: pipeDelimited should be removed
+          style: pipeDelimited 
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/conjuctivesearchkeyobject'
+          allowReserved: true  
+          
+        
+        - name: SearchOptKeyObject
+          in: query
+          description: optional Key for which the query is to be done, if key is not present
+          required: false
+          
+          explode: true
+          # for OR operation, style is pipeDelimited
+          # for AND operation, style: pipeDelimited should be removed
+          style: pipeDelimited 
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/disjunctivesearchkeyobject'
+          allowReserved: true 
+         
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            multipart/related:
+              schema:
+                $ref: '#/components/schemas/AppSearchResultList'
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer          
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /{nfInstanceID}/applicationInstances/{appInstanceID}:
+    delete:
+      tags:
+      - Application Instances Operations
+      summary: NF wants to delete an Application Instance 
+      operationId: Nudsf_UnstructuredDataManagement_Delete_App_Instance
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance where the user profile exists
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: appInstanceID
+        in: path
+        description: Unique ID of the created Application Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        202:
+          description: Deferred response to a valid request
+          content:
+            application/json:
+              schema:
+                type: string
+                items:
+                  $ref: '#/components/schemas/Description'
+          headers:
+            location:
+              description: should contain the XUdsfReqid value
+              schema:
+                type: string
+              required: false  
+            retry-after:
+              description: should contain time in seconds, specifying if UDSF does not notify in this time frame then re-try the request again
+              schema:
+                type: integer  
+              required: false  
+        204:
+          description: Expected response to a successful delete
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Application Instances Operations
+      summary: NF wants to update an Application Instance 
+      operationId: Nudsf_UnstructuredDataManagement_Update_App_Instance
+      parameters:
+      
+        
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: appInstanceID
+        in: path
+        description: Unique ID of the created Application Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/related:
+            schema:
+              items:
+                $ref: '#/components/schemas/ApplicationProfile'
+        required: true
+      responses:
+        200:
+          description: Expected response to a valid request with ID of the updated Application Instance. This ID is same as appInstanceID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatedApplicationInstance'
+        
+        
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer    
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'    
+    get:
+      tags:
+      - Application Instances Operations
+      summary: NF wants to read an Application Instance 
+      operationId: Nudsf_UnstructuredDataManagement_Query_App_instance
+      parameters:
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: appInstanceID
+        in: path
+        description: Unique ID of the user profile stored under the nfinstance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppSearchResult'
+                    
+        400:
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'           
+        500:
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+          headers:
+            retry-after:
+              description: should contain time in seconds, specifying this server down time
+              schema:
+                type: integer      
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /{nfInstanceID}/applicationInstances/notifications:
+    post:
+      tags:
+      - Application Instances Operations (Notifications)
+      summary: UDSF sends the notification with required fields (e.g. deleted sessions due to timeouts)
+      operationId: Nudsf_UnstructuredDataManagement_Notification_App_Instance
+      parameters:
+      
+        
+      - name: nfInstanceID
+        in: path
+        description: Unique ID of the NF Instance
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PostData'
+          
+        required: false
+      responses:
+        204:
+          description: Expected response to a successful receipt of request
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        instance:
+          type: string
+    SearchResult:
+      type: object
+      items:
+        $ref: '#/components/schemas/UserProfile'
+    SearchResultList:
+      type: object
+      properties:
+        userInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfile'
+    CreatedApplicationInstance:
+      type: string
+    UpdatedApplicationInstance:
+      $ref: '#/components/schemas/CreatedApplicationInstance'
+      
+    UserProfile:
+      type: object
+      properties:
+        userprofileid:
+          $ref: '#/components/schemas/UserProfileID'  
+        userdata:
+          type: string
+          format: binary
+    Description:
+      type: string
+      
+    UserProfileID:  
+      type: string
+      
+      
+    ApplicationProfile:
+      type: object
+      properties:
+        Key:
+          $ref: '#/components/schemas/keyobject'
+        Value: &valuePtr
+          $ref: '#/components/schemas/value'
+        OptionalKeyMaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptKeyMaps'
+    OptKeyMaps:
+      type: object
+      properties:
+        optKey:
+          $ref: '#/components/schemas/optkeyobject'
+        optValue: *valuePtr
+        # Note: "optValue" is pointing to  "Value" created and refered as "&valuePtr"
+        
+    keyobject:
+      type: object
+      properties:
+        KeyName: # e.g. name of the key session-id, supi
+          $ref: '#/components/schemas/key'
+        KeyData: # e.g. Data for the key, supi-id: 310150987654321
+          $ref: '#/components/schemas/keydata'
+          
+    key:
+      type: string
+      
+    keydata:
+      type: object
+      oneOf:
+        - required:
+          - SingleTon
+        - required:  
+          - Range
+      properties:
+        SingleTon:
+          $ref: '#/components/schemas/singleton'    
+        Range:  
+          $ref: '#/components/schemas/range'
+      
+      
+      
+    optkeyobject:
+      $ref: '#/components/schemas/keyobject'
+    value:
+      $ref: '#/components/schemas/storedvalue'
+      
+    
+      
+    AppSearchResult:
+      items:
+        $ref: '#/components/schemas/ApplicationProfile'
+        
+    AppSearchResultList:
+      type: object
+      properties:
+        appSearchInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationProfile'  
+    conjuctivesearchkeyobject:
+      type: object
+       
+      required:
+        - KeyName
+        - SearchKeyData
+      properties:
+        KeyName:
+          $ref: '#/components/schemas/key'
+        SearchKeyData:
+          $ref: '#/components/schemas/keydata'
+        negative:
+          type: boolean
+          default: false
+         
+        Range:  
+          $ref: '#/components/schemas/range'
+    singleton:
+      type: string
+    # range type can be of the type integer (e.g. port range) or ipaddress type (e.g. ipaddress range).  
+    range:
+      type: object
+      required:
+        - TYPE
+        - LOW
+        - HIGH
+      properties:
+        TYPE:
+          type: string
+          enum:
+            - integer
+            - ipaddress
+        LOW:
+          type: string
+        HIGH:
+          type: string
+    storedvaluebinary:
+      type: string
+      format: binary  
+      
+    storedvaluestring:
+      type: string     
+      
+    storedvalue:
+      type: string
+      properties:  
+        storedvalueobject:
+          oneOf:
+            - $ref: '#/components/schemas/storedvaluestring'
+            - $ref: '#/components/schemas/storedvaluebinary'    
+ 
+
+    
+    disjunctivesearchkeyobject:
+      $ref: '#/components/schemas/conjuctivesearchkeyobject'
+    
+            
+    PostData:
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/CreatedApplicationInstance'
+        - type: array
+          items:
+            $ref: '#/components/schemas/UserProfileID'
